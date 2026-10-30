@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Global Carbon Emissions</title>
+
+  <style>
+    /* 网页整体设置 */
+    body {
+      margin: 0;
+      background: #faf8f1;
+      font-family: Arial, sans-serif;
+      color: #18334b;
+    }
+
+    /* 标题区域 */
+    .page-header {
+      padding: 50px 20px 35px;
+      text-align: center;
+      border-bottom: 3px solid #64a3bc;
+    }
+
+    /* 黄色横幅 */
+    .title-banner {
+      display: inline-block;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 20px 40px;
+
+      background: #f8e6ae;
+
+      /* 将左右边缘裁切成横幅形状 */
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        98% 25%,
+        100% 50%,
+        98% 75%,
+        100% 100%,
+        0 100%,
+        2% 75%,
+        0 50%,
+        2% 25%
+      );
+    }
+
+    /* 主标题 */
+    .main-title {
+      margin: 0;
+      font-family: "Arial Black", Impact, sans-serif;
+      font-size: clamp(30px, 5vw, 64px);
+      font-weight: 900;
+      line-height: 1.15;
+      letter-spacing: 1px;
+      color: #073653;
+    }
+
+    /* 副标题 */
+    .subtitle {
+      margin: 16px 0 12px;
+      font-size: clamp(20px, 2.5vw, 30px);
+      font-weight: 700;
+      line-height: 1.3;
+      color: #087b7d;
+    }
+
+    /* 引导问题 */
+    .intro-question {
+      max-width: 800px;
+      margin: 0 auto;
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    /* 小屏幕调整 */
+    @media (max-width: 600px) {
+      .page-header {
+        padding: 30px 15px;
+      }
+
+      .title-banner {
+        padding: 18px 24px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="page-header">
+
+    <div class="title-banner">
+      <h1 class="main-title">
+        GLOBAL CARBON EMISSIONS
+      </h1>
+    </div>
+
+    <p class="subtitle">
+      Beyond the Totals: Who Emits, Who Is Changing?
+    </p>
+
+    <p class="intro-question">
+      Does a small share of global emissions also mean
+      low emissions per person?
+    </p>
+
+  </header>
+</body>
+</html>
