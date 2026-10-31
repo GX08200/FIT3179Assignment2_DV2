@@ -4856,12 +4856,6 @@
             "title": "Share of world"
           },
           {
-            "field": "co2_tonnes",
-            "type": "quantitative",
-            "title": "CO2 emissions (tonnes)",
-            "format": ",.0f"
-          },
-          {
             "field": "year",
             "type": "ordinal",
             "title": "Year"
@@ -4939,12 +4933,6 @@
             "title": "Share of world"
           },
           {
-            "field": "co2_tonnes",
-            "type": "quantitative",
-            "title": "CO2 emissions (tonnes)",
-            "format": ",.0f"
-          },
-          {
             "field": "year",
             "type": "ordinal",
             "title": "Year"
@@ -5015,12 +5003,6 @@
             "field": "share_label",
             "type": "nominal",
             "title": "Share of world"
-          },
-          {
-            "field": "co2_tonnes",
-            "type": "quantitative",
-            "title": "CO2 emissions (tonnes)",
-            "format": ",.0f"
           },
           {
             "field": "year",
