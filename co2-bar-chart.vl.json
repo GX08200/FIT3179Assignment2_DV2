@@ -47,5 +47,29 @@
         "format": ",.1f"
       }
     ]
+  },
+  "config": {
+    "font": "Arial",
+    "title": {
+      "font": "Arial",
+      "fontSize": 16,
+      "fontWeight": 700
+    },
+    "axis": {
+      "labelFont": "Arial",
+      "labelFontSize": 12,
+      "labelFontWeight": 400,
+      "titleFont": "Arial",
+      "titleFontSize": 12,
+      "titleFontWeight": 400
+    },
+    "legend": {
+      "labelFont": "Arial",
+      "labelFontSize": 12,
+      "labelFontWeight": 400,
+      "titleFont": "Arial",
+      "titleFontSize": 12,
+      "titleFontWeight": 400
+    }
   }
 }
