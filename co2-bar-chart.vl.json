@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Annual CO₂ emissions by country (2024)",
+  "width": 600,
+  "height": 500,
+  "data": {
+    "url": "./co2_emissions_2024_top20.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.co2_tonnes / 1000000",
+      "as": "co2_mt"
+    }
+  ],
+  "mark": {
+    "type": "bar",
+    "color": "#087b7d"
+  },
+  "encoding": {
+    "y": {
+      "field": "country",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null
+    },
+    "x": {
+      "field": "co2_mt",
+      "type": "quantitative",
+      "title": "Annual CO₂ emissions (million tonnes)",
+      "scale": {
+        "zero": true
+      }
+    },
+    "tooltip": [
+      {
+        "field": "country",
+        "type": "nominal",
+        "title": "Country"
+      },
+      {
+        "field": "co2_mt",
+        "type": "quantitative",
+        "title": "CO₂ emissions (Mt)",
+        "format": ",.1f"
+      }
+    ]
+  }
+}
