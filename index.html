@@ -84,6 +84,22 @@
         padding: 18px 24px;
       }
     }
+
+    /* Two independent Vega-Lite charts, displayed side by side. */
+    .chart-pair {
+      max-width: 1200px;
+      margin: 36px auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      align-items: start;
+    }
+    .chart-panel { min-width: 0; }
+    .chart-slot, .chart-slot.vega-embed { display: block; width: 100%; }
+    @media (max-width: 900px) {
+      .chart-pair { grid-template-columns: 1fr; padding: 0 16px; }
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -109,15 +125,34 @@
     </p>
 
   </header>
-  <!-- 图表显示区域 -->
-<div style="max-width: 1000px; margin: 30px auto; padding: 20px;">
-  <div id="emissions-chart"></div>
-</div>
+  <!-- 左侧条形图，右侧矩形树图 -->
+  <main class="chart-pair">
+    <section class="chart-panel" aria-label="Annual CO2 emissions bar chart">
+      <div id="emissions-chart" class="chart-slot"></div>
+    </section>
+    <section class="chart-panel" aria-label="Share of world CO2 emissions treemap">
+      <div id="co2-treemap" class="chart-slot"></div>
+    </section>
+  </main>
 
-<!-- 定义并显示图表 -->
-<script>
-  vegaEmbed("#emissions-chart", "./co2-bar-chart.vl.json")
-    .catch(console.error);
-</script>
+  <script>
+    // Specifications stay in separate JSON files; page layout sets their size.
+    async function embedChart(selector, specificationUrl) {
+      try {
+        const response = await fetch(specificationUrl);
+        if (!response.ok) throw new Error(`Cannot load ${specificationUrl}`);
+        const spec = await response.json();
+        spec.width = "container";
+        spec.height = 500;
+        spec.autosize = {type: "fit", contains: "padding", resize: true};
+        await vegaEmbed(selector, spec, {actions: false});
+      } catch (error) {
+        document.querySelector(selector).textContent = "The chart could not load. Please refresh the page.";
+        console.error(error);
+      }
+    }
+    embedChart("#emissions-chart", "./co2-bar-chart.vl.json");
+    embedChart("#co2-treemap", "./co2-treemap.vl.json");
+  </script>
 </body>
 </html>
