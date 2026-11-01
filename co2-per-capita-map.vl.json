@@ -62,73 +62,116 @@
       "as": "source_scope"
     }
   ],
-  "mark": {
-    "type": "geoshape",
-    "stroke": "#a8bac7",
-    "strokeWidth": 0.4,
-    "invalid": null
-  },
-  "encoding": {
-    "color": {
-      "condition": {
-        "test": "isValid(datum.per_capita) && isNumber(datum.per_capita)",
-        "field": "per_capita",
-        "type": "quantitative",
-        "scale": {
-          "type": "threshold",
-          "domain": [
-            1,
-            5,
-            10,
-            20
-          ],
-          "range": [
-            "#eff3ff",
-            "#bdd7e7",
-            "#6baed6",
-            "#3182bd",
-            "#08519c"
-          ]
-        },
-        "legend": null
-      },
-      "value": "#737373"
-    },
-    "tooltip": [
-      {
-        "field": "country_key",
-        "type": "nominal",
-        "title": "Country / territory"
-      },
-      {
-        "field": "per_capita",
-        "type": "quantitative",
-        "title": "CO₂ per person (tonnes/year)",
-        "format": ".2f"
-      },
-      {
-        "field": "co2_tonnes",
-        "type": "quantitative",
-        "title": "Annual CO₂ emissions (tonnes)",
-        "format": ",.0f"
-      },
-      {
-        "field": "data_status",
-        "type": "nominal",
-        "title": "Data status"
-      },
-      {
-        "field": "source_scope",
-        "type": "nominal",
-        "title": "Reporting scope"
-      }
-    ]
-  },
   "config": {
     "background": "#faf8f1",
     "font": "Arial",
     "view": {
       "stroke": null
     }
-  }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "geoshape",
+        "fill": "#737373",
+        "stroke": "#a8bac7",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "country_key",
+            "type": "nominal",
+            "title": "Country / territory"
+          },
+          {
+            "field": "per_capita",
+            "type": "quantitative",
+            "title": "CO₂ per person (tonnes/year)",
+            "format": ".2f"
+          },
+          {
+            "field": "co2_tonnes",
+            "type": "quantitative",
+            "title": "Annual CO₂ emissions (tonnes)",
+            "format": ",.0f"
+          },
+          {
+            "field": "data_status",
+            "type": "nominal",
+            "title": "Data status"
+          },
+          {
+            "field": "source_scope",
+            "type": "nominal",
+            "title": "Reporting scope"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "isValid(datum.per_capita) && isNumber(datum.per_capita)"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#a8bac7",
+        "strokeWidth": 0.4
+      },
+      "encoding": {
+        "color": {
+          "field": "per_capita",
+          "type": "quantitative",
+          "scale": {
+            "type": "threshold",
+            "domain": [
+              1,
+              5,
+              10,
+              20
+            ],
+            "range": [
+              "#eff3ff",
+              "#bdd7e7",
+              "#6baed6",
+              "#3182bd",
+              "#08519c"
+            ]
+          },
+          "legend": null
+        },
+        "tooltip": [
+          {
+            "field": "country_key",
+            "type": "nominal",
+            "title": "Country / territory"
+          },
+          {
+            "field": "per_capita",
+            "type": "quantitative",
+            "title": "CO₂ per person (tonnes/year)",
+            "format": ".2f"
+          },
+          {
+            "field": "co2_tonnes",
+            "type": "quantitative",
+            "title": "Annual CO₂ emissions (tonnes)",
+            "format": ",.0f"
+          },
+          {
+            "field": "data_status",
+            "type": "nominal",
+            "title": "Data status"
+          },
+          {
+            "field": "source_scope",
+            "type": "nominal",
+            "title": "Reporting scope"
+          }
+        ]
+      }
+    }
+  ]
 }
