@@ -1,0 +1,141 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "100-cell waffle showing the composition of US energy-related CO2 emissions in 2024. Source: EIA Table 1, May 2026 MER edition. Rounded sector values sum to 4788 Mt, compared with the separately rounded total of 4789 Mt. Shares use the sum of sectors as the denominator and largest-remainder rounding to total 100.00%; whole waffle cells total 100.",
+  "width": 500,
+  "height": 500,
+  "background": "#faf8f1",
+  "padding": 0,
+  "data": {
+    "url": "./us_energy_co2_by_sector_2024.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "co2_million_tonnes": "number",
+        "share_pct": "number",
+        "waffle_cells": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "window": [
+        {
+          "op": "sum",
+          "field": "waffle_cells",
+          "as": "cell_end"
+        }
+      ],
+      "sort": [
+        {
+          "field": "co2_million_tonnes",
+          "order": "descending"
+        }
+      ],
+      "frame": [
+        null,
+        0
+      ]
+    },
+    {
+      "calculate": "sequence(datum.cell_end - datum.waffle_cells, datum.cell_end)",
+      "as": "cell_indices"
+    },
+    {
+      "flatten": [
+        "cell_indices"
+      ],
+      "as": [
+        "cell_index"
+      ]
+    },
+    {
+      "calculate": "datum.cell_index % 10",
+      "as": "column"
+    },
+    {
+      "calculate": "floor(datum.cell_index / 10)",
+      "as": "row"
+    }
+  ],
+  "mark": {
+    "type": "rect",
+    "cornerRadius": 3,
+    "stroke": "#faf8f1",
+    "strokeWidth": 2
+  },
+  "encoding": {
+    "x": {
+      "field": "column",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": null,
+      "scale": {
+        "paddingInner": 0.06,
+        "paddingOuter": 0.02
+      }
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "sort": "descending",
+      "axis": null,
+      "scale": {
+        "paddingInner": 0.06,
+        "paddingOuter": 0.02
+      }
+    },
+    "color": {
+      "field": "sector",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "Transportation",
+          "Electric power",
+          "Industrial",
+          "Residential",
+          "Commercial"
+        ],
+        "range": [
+          "#2166ac",
+          "#8c510a",
+          "#7253a0",
+          "#9d7a00",
+          "#66717d"
+        ]
+      },
+      "legend": null
+    },
+    "tooltip": [
+      {
+        "field": "sector",
+        "type": "nominal",
+        "title": "Sector"
+      },
+      {
+        "field": "share_pct",
+        "type": "quantitative",
+        "title": "Share (%)",
+        "format": ".2f"
+      },
+      {
+        "field": "co2_million_tonnes",
+        "type": "quantitative",
+        "title": "CO₂ (million tonnes)",
+        "format": ",.0f"
+      },
+      {
+        "field": "waffle_cells",
+        "type": "quantitative",
+        "title": "Squares out of 100",
+        "format": "d"
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial"
+  }
+}
