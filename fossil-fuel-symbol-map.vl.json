@@ -1,0 +1,134 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1100,
+  "height": 500,
+  "background": "#faf8f1",
+  "padding": 10,
+  "description": "Proportional symbol map of fossil fuel consumption in 2025, TWh. Coal, oil and gas total, not per capita. OWID/Energy Institute/EIA. Linear size scale with zero maps consumption to circle area, not radius. Natural Earth label coordinates place all 79 source countries and territories with 2025 observations. Countries without 2025 data are excluded, not assigned zero. Larger symbols drawn first.",
+  "projection": {
+    "type": "equalEarth"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "./world.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.properties.NAME !== 'Antarctica'"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e4e5e0",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.6
+      }
+    },
+    {
+      "data": {
+        "url": "./fossil_fuel_consumption_2025.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "year": "number",
+            "fossil_fuel_consumption_twh": "number",
+            "longitude": "number",
+            "latitude": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "isValid(datum.longitude) && isValid(datum.latitude) && isValid(datum.fossil_fuel_consumption_twh)"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "color": "#b35806",
+        "opacity": 0.65,
+        "stroke": "#713800",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "size": {
+          "field": "fossil_fuel_consumption_twh",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "domain": [
+              0,
+              40000
+            ],
+            "range": [
+              0,
+              6500
+            ],
+            "zero": true
+          },
+          "legend": {
+            "title": "Fossil fuel consumption (TWh)",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "values": [
+              1000,
+              5000,
+              10000,
+              20000,
+              40000
+            ],
+            "format": ",.0f",
+            "titleFontSize": 14,
+            "labelFontSize": 12,
+            "symbolOpacity": 0.65,
+            "titleLimit": 400
+          }
+        },
+        "order": {
+          "field": "fossil_fuel_consumption_twh",
+          "sort": "descending"
+        },
+        "tooltip": [
+          {
+            "field": "country",
+            "title": "Country / territory"
+          },
+          {
+            "field": "year",
+            "title": "Year",
+            "type": "ordinal"
+          },
+          {
+            "field": "fossil_fuel_consumption_twh",
+            "title": "Fossil fuel consumption (TWh)",
+            "type": "quantitative",
+            "format": ",.2f"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "legend": {
+      "labelColor": "#222",
+      "titleColor": "#222",
+      "padding": 10
+    }
+  }
+}
