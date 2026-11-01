@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "100-cell waffle showing the composition of US energy-related CO2 emissions in 2024. Source: EIA Table 1, May 2026 MER edition. Rounded sector values sum to 4788 Mt, compared with the separately rounded total of 4789 Mt. Shares use the sum of sectors as the denominator and largest-remainder rounding to total 100.00%; whole waffle cells total 100.",
+  "description": "100-cell waffle showing the composition of US energy-related CO2 emissions in 2024. Source: EIA Table 1, May 2026 MER edition. Rounded sector values sum to 4788 Mt, compared with the separately rounded total of 4789 Mt. Shares use the sum of sectors as the denominator and largest-remainder rounding to total 100.00%; whole waffle cells total 100. Alternating row directions keep each sector connected across row boundaries.",
   "width": 500,
   "height": 500,
   "background": "#faf8f1",
@@ -50,7 +50,7 @@
       ]
     },
     {
-      "calculate": "datum.cell_index % 10",
+      "calculate": "floor(datum.cell_index / 10) % 2 === 0 ? datum.cell_index % 10 : 9 - (datum.cell_index % 10)",
       "as": "column"
     },
     {
