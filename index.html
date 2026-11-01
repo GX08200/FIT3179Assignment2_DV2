@@ -145,6 +145,8 @@
     .sector-swatch { display: inline-block; width: 17px; height: 17px; margin-right: 12px; vertical-align: -2px; border-radius: 2px; }
     .sector-table tfoot { font-weight: 700; }
     @media (max-width: 900px) { .waffle-layout { grid-template-columns: 1fr; gap: 24px; } }
+    .year-control { display: flex; gap: 12px; align-items: center; margin-top: 20px; font: 16px Verdana, Geneva, sans-serif; color: #222; }
+    .year-control select { padding: 8px 14px; border: 1px solid #777; border-radius: 4px; background: #fff; color: #222; font: inherit; cursor: pointer; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -221,22 +223,23 @@
   <section class="map-section" aria-labelledby="us-sector-heading">
     <h2 id="us-sector-heading" class="section-heading">U.S. Energy-Related CO₂ Emissions by Sector (2024)</h2>
     <p class="figure-description">100 squares represent 100% of U.S. energy-related CO₂ emissions.</p>
+    <div class="year-control"><label for="us-sector-year">Year</label><select id="us-sector-year" disabled><option value="2007">2007</option><option value="2024" selected>2024</option></select></div>
     <div class="waffle-layout">
       <div id="us-sector-waffle" class="waffle-chart" aria-label="100-square waffle chart of US energy-related carbon dioxide emissions by sector in 2024"></div>
       <table class="sector-table" aria-label="Sector shares of US energy-related CO2 emissions in 2024">
         <thead><tr><th scope="col">Sector</th><th scope="col">Share</th></tr></thead>
         <tbody>
-          <tr><td><span class="sector-swatch" style="background:#2166ac" aria-hidden="true"></span>Transportation</td><td>38.91%</td></tr>
-          <tr><td><span class="sector-swatch" style="background:#8c510a" aria-hidden="true"></span>Electric power</td><td>29.80%</td></tr>
-          <tr><td><span class="sector-swatch" style="background:#7253a0" aria-hidden="true"></span>Industrial</td><td>19.95%</td></tr>
-          <tr><td><span class="sector-swatch" style="background:#9d7a00" aria-hidden="true"></span>Residential</td><td>6.35%</td></tr>
-          <tr><td><span class="sector-swatch" style="background:#66717d" aria-hidden="true"></span>Commercial</td><td>4.99%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#2166ac" aria-hidden="true"></span>Transportation</td><td data-sector="Transportation">38.91%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#8c510a" aria-hidden="true"></span>Electric power</td><td data-sector="Electric power">29.80%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#7253a0" aria-hidden="true"></span>Industrial</td><td data-sector="Industrial">19.95%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#9d7a00" aria-hidden="true"></span>Residential</td><td data-sector="Residential">6.35%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#66717d" aria-hidden="true"></span>Commercial</td><td data-sector="Commercial">4.99%</td></tr>
         </tbody><tfoot><tr><td>Total</td><td>100.00%</td></tr></tfoot>
       </table>
     </div>
-    <p class="map-note">Each square represents approximately 1%. Whole-square rounding gives 39 transportation, 30 electric power, 20 industrial, 6 residential and 5 commercial squares. The table shows shares to two decimal places.</p>
+    <p id="waffle-rounding-note" class="map-note">Each square represents approximately 1%. Whole-square rounding gives 39 transportation, 30 electric power, 20 industrial, 6 residential and 5 commercial squares. The table shows shares to two decimal places.</p>
     <p class="map-note">Electricity-generation emissions are assigned to electric power, rather than counted again in the other sectors. This chart covers energy-related CO₂ only, using a different scope from the Worldometer inventory above.</p>
-    <p class="map-note">Source: <a href="https://www.eia.gov/environment/emissions/carbon/">U.S. Energy Information Administration (EIA), Table 1, 2024 data</a>, Monthly Energy Review, May 2026 edition. Shares use the sum of the five rounded sector values (4,788 million tonnes); EIA reports a separately rounded total of 4,789 million tonnes. Percentages are rounded to total 100.00%. <a href="./us_energy_co2_by_sector_2024.csv" download>Download CSV</a>.</p>
+    <p class="map-note">Source: <a href="https://www.eia.gov/totalenergy/data/monthly/previous.php">EIA Monthly Energy Review, May 2026, Tables 11.2–11.6</a> (<a href="https://www.eia.gov/totalenergy/data/monthly/Zip_Excel_Month_end/MER_2026_05.zip">official data download</a>). Both years use the same edition and direct-emissions accounting. Sector values are rounded to million tonnes; shares use their sum and are rounded to total 100.00%. <a href="./us_energy_co2_by_sector_2007_2024.csv" download>Download CSV (2007 and 2024)</a>.</p>
   </section>
 
 
@@ -250,7 +253,7 @@
         spec.width = "container";
         spec.height = selector === "#us-sector-waffle" ? Math.min(500, document.querySelector(selector).clientWidth) : 500;
         spec.autosize = {type: "fit", contains: "padding", resize: true};
-        await vegaEmbed(selector, spec, {actions: false});
+        return await vegaEmbed(selector, spec, {actions: false});
       } catch (error) {
         document.querySelector(selector).textContent = "The chart could not load. Please refresh the page.";
         console.error(error);
@@ -260,7 +263,38 @@
     embedChart("#co2-treemap", "./co2-treemap.vl.json?v=distinct-palette-2");
     embedChart("#per-capita-map", "./co2-per-capita-map.vl.json?v=nodata-dark-grey-2");
     embedChart("#per-capita-line", "./co2-per-capita-line.vl.json");
-    embedChart("#us-sector-waffle", "./us-sector-waffle.vl.json");
+
+    async function initializeSectorWaffle() {
+      const selector = document.querySelector("#us-sector-year");
+      try {
+        const response = await fetch("./us_energy_co2_by_sector_2007_2024.csv", {cache: "no-store"});
+        if (!response.ok) throw new Error("Cannot load sector data");
+        const rows = vega.read(await response.text(), {type: "csv", parse: "auto"});
+        const result = await embedChart("#us-sector-waffle", "./us-sector-waffle.vl.json?v=year-switch-1");
+        if (!result) throw new Error("Cannot load sector chart");
+        function updateSummary(year) {
+          const selected = rows.filter(row => row.year === year);
+          if (selected.length !== 5 || Math.round(selected.reduce((sum, row) => sum + row.share_pct, 0) * 100) !== 10000 || selected.reduce((sum, row) => sum + row.waffle_cells, 0) !== 100) throw new Error("Invalid sector totals");
+          document.querySelector("#us-sector-heading").textContent = "U.S. Energy-Related CO₂ Emissions by Sector (" + year + ")";
+          document.querySelector("#us-sector-waffle").setAttribute("aria-label", "100-square waffle chart of US energy-related CO2 emissions by sector in " + year);
+          document.querySelector(".sector-table").setAttribute("aria-label", "Sector shares of US energy-related CO2 emissions in " + year);
+          for (const row of selected) document.querySelector('[data-sector="' + row.sector + '"]').textContent = row.share_pct.toFixed(2) + "%";
+          const names = {"Transportation": "transportation", "Electric power": "electric power", "Industrial": "industrial", "Residential": "residential", "Commercial": "commercial"};
+          document.querySelector("#waffle-rounding-note").textContent = "Each square represents approximately 1%. In " + year + ", whole-square rounding gives " + selected.map(row => row.waffle_cells + " " + names[row.sector]).join(", ") + " squares. The table shows shares to two decimal places.";
+        }
+        updateSummary(2024);
+        selector.addEventListener("change", async () => {
+          const year = Number(selector.value);
+          await result.view.signal("selectedYear", year).runAsync();
+          updateSummary(year);
+        });
+        selector.disabled = false;
+      } catch (error) {
+        document.querySelector("#us-sector-waffle").textContent = "The chart could not load. Please refresh the page.";
+        console.error(error);
+      }
+    }
+    initializeSectorWaffle();
   </script>
 </body>
 </html>
