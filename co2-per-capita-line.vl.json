@@ -1,0 +1,692 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Annual CO2 emissions per person in China and the United States, 1970–2024. All 55 annual observations per country are retained from china_co2_emissions_1970_2024.csv and us_co2_emissions_1970_2024.csv, sourced from Worldometer country history tables. Five-year x-axis ticks affect labels only, not the data.",
+  "width": 1000,
+  "height": 440,
+  "background": "#faf8f1",
+  "data": {
+    "values": [
+      {
+        "country": "China",
+        "year": 1970,
+        "co2_per_capita_tonnes": 1.11
+      },
+      {
+        "country": "China",
+        "year": 1971,
+        "co2_per_capita_tonnes": 1.08
+      },
+      {
+        "country": "China",
+        "year": 1972,
+        "co2_per_capita_tonnes": 1.13
+      },
+      {
+        "country": "China",
+        "year": 1973,
+        "co2_per_capita_tonnes": 1.15
+      },
+      {
+        "country": "China",
+        "year": 1974,
+        "co2_per_capita_tonnes": 1.14
+      },
+      {
+        "country": "China",
+        "year": 1975,
+        "co2_per_capita_tonnes": 1.29
+      },
+      {
+        "country": "China",
+        "year": 1976,
+        "co2_per_capita_tonnes": 1.31
+      },
+      {
+        "country": "China",
+        "year": 1977,
+        "co2_per_capita_tonnes": 1.45
+      },
+      {
+        "country": "China",
+        "year": 1978,
+        "co2_per_capita_tonnes": 1.62
+      },
+      {
+        "country": "China",
+        "year": 1979,
+        "co2_per_capita_tonnes": 1.63
+      },
+      {
+        "country": "China",
+        "year": 1980,
+        "co2_per_capita_tonnes": 1.57
+      },
+      {
+        "country": "China",
+        "year": 1981,
+        "co2_per_capita_tonnes": 1.54
+      },
+      {
+        "country": "China",
+        "year": 1982,
+        "co2_per_capita_tonnes": 1.59
+      },
+      {
+        "country": "China",
+        "year": 1983,
+        "co2_per_capita_tonnes": 1.64
+      },
+      {
+        "country": "China",
+        "year": 1984,
+        "co2_per_capita_tonnes": 1.76
+      },
+      {
+        "country": "China",
+        "year": 1985,
+        "co2_per_capita_tonnes": 1.75
+      },
+      {
+        "country": "China",
+        "year": 1986,
+        "co2_per_capita_tonnes": 1.83
+      },
+      {
+        "country": "China",
+        "year": 1987,
+        "co2_per_capita_tonnes": 1.92
+      },
+      {
+        "country": "China",
+        "year": 1988,
+        "co2_per_capita_tonnes": 2.02
+      },
+      {
+        "country": "China",
+        "year": 1989,
+        "co2_per_capita_tonnes": 2.06
+      },
+      {
+        "country": "China",
+        "year": 1990,
+        "co2_per_capita_tonnes": 2.06
+      },
+      {
+        "country": "China",
+        "year": 1991,
+        "co2_per_capita_tonnes": 2.14
+      },
+      {
+        "country": "China",
+        "year": 1992,
+        "co2_per_capita_tonnes": 2.22
+      },
+      {
+        "country": "China",
+        "year": 1993,
+        "co2_per_capita_tonnes": 2.37
+      },
+      {
+        "country": "China",
+        "year": 1994,
+        "co2_per_capita_tonnes": 2.48
+      },
+      {
+        "country": "China",
+        "year": 1995,
+        "co2_per_capita_tonnes": 2.71
+      },
+      {
+        "country": "China",
+        "year": 1996,
+        "co2_per_capita_tonnes": 2.67
+      },
+      {
+        "country": "China",
+        "year": 1997,
+        "co2_per_capita_tonnes": 2.73
+      },
+      {
+        "country": "China",
+        "year": 1998,
+        "co2_per_capita_tonnes": 2.78
+      },
+      {
+        "country": "China",
+        "year": 1999,
+        "co2_per_capita_tonnes": 2.7
+      },
+      {
+        "country": "China",
+        "year": 2000,
+        "co2_per_capita_tonnes": 2.84
+      },
+      {
+        "country": "China",
+        "year": 2001,
+        "co2_per_capita_tonnes": 2.96
+      },
+      {
+        "country": "China",
+        "year": 2002,
+        "co2_per_capita_tonnes": 3.18
+      },
+      {
+        "country": "China",
+        "year": 2003,
+        "co2_per_capita_tonnes": 3.65
+      },
+      {
+        "country": "China",
+        "year": 2004,
+        "co2_per_capita_tonnes": 4.18
+      },
+      {
+        "country": "China",
+        "year": 2005,
+        "co2_per_capita_tonnes": 4.72
+      },
+      {
+        "country": "China",
+        "year": 2006,
+        "co2_per_capita_tonnes": 5.21
+      },
+      {
+        "country": "China",
+        "year": 2007,
+        "co2_per_capita_tonnes": 5.63
+      },
+      {
+        "country": "China",
+        "year": 2008,
+        "co2_per_capita_tonnes": 5.77
+      },
+      {
+        "country": "China",
+        "year": 2009,
+        "co2_per_capita_tonnes": 6.15
+      },
+      {
+        "country": "China",
+        "year": 2010,
+        "co2_per_capita_tonnes": 6.7
+      },
+      {
+        "country": "China",
+        "year": 2011,
+        "co2_per_capita_tonnes": 7.28
+      },
+      {
+        "country": "China",
+        "year": 2012,
+        "co2_per_capita_tonnes": 7.47
+      },
+      {
+        "country": "China",
+        "year": 2013,
+        "co2_per_capita_tonnes": 7.78
+      },
+      {
+        "country": "China",
+        "year": 2014,
+        "co2_per_capita_tonnes": 7.83
+      },
+      {
+        "country": "China",
+        "year": 2015,
+        "co2_per_capita_tonnes": 7.69
+      },
+      {
+        "country": "China",
+        "year": 2016,
+        "co2_per_capita_tonnes": 7.68
+      },
+      {
+        "country": "China",
+        "year": 2017,
+        "co2_per_capita_tonnes": 7.8
+      },
+      {
+        "country": "China",
+        "year": 2018,
+        "co2_per_capita_tonnes": 8.15
+      },
+      {
+        "country": "China",
+        "year": 2019,
+        "co2_per_capita_tonnes": 8.32
+      },
+      {
+        "country": "China",
+        "year": 2020,
+        "co2_per_capita_tonnes": 8.4
+      },
+      {
+        "country": "China",
+        "year": 2021,
+        "co2_per_capita_tonnes": 8.79
+      },
+      {
+        "country": "China",
+        "year": 2022,
+        "co2_per_capita_tonnes": 8.74
+      },
+      {
+        "country": "China",
+        "year": 2023,
+        "co2_per_capita_tonnes": 9.08
+      },
+      {
+        "country": "China",
+        "year": 2024,
+        "co2_per_capita_tonnes": 9.13
+      },
+      {
+        "country": "United States",
+        "year": 1970,
+        "co2_per_capita_tonnes": 21.92
+      },
+      {
+        "country": "United States",
+        "year": 1971,
+        "co2_per_capita_tonnes": 21.09
+      },
+      {
+        "country": "United States",
+        "year": 1972,
+        "co2_per_capita_tonnes": 22.08
+      },
+      {
+        "country": "United States",
+        "year": 1973,
+        "co2_per_capita_tonnes": 22.75
+      },
+      {
+        "country": "United States",
+        "year": 1974,
+        "co2_per_capita_tonnes": 21.76
+      },
+      {
+        "country": "United States",
+        "year": 1975,
+        "co2_per_capita_tonnes": 20.6
+      },
+      {
+        "country": "United States",
+        "year": 1976,
+        "co2_per_capita_tonnes": 21.77
+      },
+      {
+        "country": "United States",
+        "year": 1977,
+        "co2_per_capita_tonnes": 22.3
+      },
+      {
+        "country": "United States",
+        "year": 1978,
+        "co2_per_capita_tonnes": 22.04
+      },
+      {
+        "country": "United States",
+        "year": 1979,
+        "co2_per_capita_tonnes": 22.0
+      },
+      {
+        "country": "United States",
+        "year": 1980,
+        "co2_per_capita_tonnes": 20.8
+      },
+      {
+        "country": "United States",
+        "year": 1981,
+        "co2_per_capita_tonnes": 20.3
+      },
+      {
+        "country": "United States",
+        "year": 1982,
+        "co2_per_capita_tonnes": 19.07
+      },
+      {
+        "country": "United States",
+        "year": 1983,
+        "co2_per_capita_tonnes": 18.82
+      },
+      {
+        "country": "United States",
+        "year": 1984,
+        "co2_per_capita_tonnes": 19.51
+      },
+      {
+        "country": "United States",
+        "year": 1985,
+        "co2_per_capita_tonnes": 19.44
+      },
+      {
+        "country": "United States",
+        "year": 1986,
+        "co2_per_capita_tonnes": 19.1
+      },
+      {
+        "country": "United States",
+        "year": 1987,
+        "co2_per_capita_tonnes": 19.56
+      },
+      {
+        "country": "United States",
+        "year": 1988,
+        "co2_per_capita_tonnes": 20.27
+      },
+      {
+        "country": "United States",
+        "year": 1989,
+        "co2_per_capita_tonnes": 20.31
+      },
+      {
+        "country": "United States",
+        "year": 1990,
+        "co2_per_capita_tonnes": 19.73
+      },
+      {
+        "country": "United States",
+        "year": 1991,
+        "co2_per_capita_tonnes": 19.37
+      },
+      {
+        "country": "United States",
+        "year": 1992,
+        "co2_per_capita_tonnes": 19.49
+      },
+      {
+        "country": "United States",
+        "year": 1993,
+        "co2_per_capita_tonnes": 19.75
+      },
+      {
+        "country": "United States",
+        "year": 1994,
+        "co2_per_capita_tonnes": 19.86
+      },
+      {
+        "country": "United States",
+        "year": 1995,
+        "co2_per_capita_tonnes": 19.84
+      },
+      {
+        "country": "United States",
+        "year": 1996,
+        "co2_per_capita_tonnes": 20.19
+      },
+      {
+        "country": "United States",
+        "year": 1997,
+        "co2_per_capita_tonnes": 20.94
+      },
+      {
+        "country": "United States",
+        "year": 1998,
+        "co2_per_capita_tonnes": 20.85
+      },
+      {
+        "country": "United States",
+        "year": 1999,
+        "co2_per_capita_tonnes": 20.66
+      },
+      {
+        "country": "United States",
+        "year": 2000,
+        "co2_per_capita_tonnes": 21.03
+      },
+      {
+        "country": "United States",
+        "year": 2001,
+        "co2_per_capita_tonnes": 20.63
+      },
+      {
+        "country": "United States",
+        "year": 2002,
+        "co2_per_capita_tonnes": 19.92
+      },
+      {
+        "country": "United States",
+        "year": 2003,
+        "co2_per_capita_tonnes": 19.97
+      },
+      {
+        "country": "United States",
+        "year": 2004,
+        "co2_per_capita_tonnes": 20.1
+      },
+      {
+        "country": "United States",
+        "year": 2005,
+        "co2_per_capita_tonnes": 19.95
+      },
+      {
+        "country": "United States",
+        "year": 2006,
+        "co2_per_capita_tonnes": 19.44
+      },
+      {
+        "country": "United States",
+        "year": 2007,
+        "co2_per_capita_tonnes": 19.54
+      },
+      {
+        "country": "United States",
+        "year": 2008,
+        "co2_per_capita_tonnes": 18.75
+      },
+      {
+        "country": "United States",
+        "year": 2009,
+        "co2_per_capita_tonnes": 17.23
+      },
+      {
+        "country": "United States",
+        "year": 2010,
+        "co2_per_capita_tonnes": 17.89
+      },
+      {
+        "country": "United States",
+        "year": 2011,
+        "co2_per_capita_tonnes": 17.06
+      },
+      {
+        "country": "United States",
+        "year": 2012,
+        "co2_per_capita_tonnes": 16.24
+      },
+      {
+        "country": "United States",
+        "year": 2013,
+        "co2_per_capita_tonnes": 16.56
+      },
+      {
+        "country": "United States",
+        "year": 2014,
+        "co2_per_capita_tonnes": 16.5
+      },
+      {
+        "country": "United States",
+        "year": 2015,
+        "co2_per_capita_tonnes": 16.04
+      },
+      {
+        "country": "United States",
+        "year": 2016,
+        "co2_per_capita_tonnes": 15.61
+      },
+      {
+        "country": "United States",
+        "year": 2017,
+        "co2_per_capita_tonnes": 15.29
+      },
+      {
+        "country": "United States",
+        "year": 2018,
+        "co2_per_capita_tonnes": 15.66
+      },
+      {
+        "country": "United States",
+        "year": 2019,
+        "co2_per_capita_tonnes": 15.1
+      },
+      {
+        "country": "United States",
+        "year": 2020,
+        "co2_per_capita_tonnes": 13.48
+      },
+      {
+        "country": "United States",
+        "year": 2021,
+        "co2_per_capita_tonnes": 14.24
+      },
+      {
+        "country": "United States",
+        "year": 2022,
+        "co2_per_capita_tonnes": 14.33
+      },
+      {
+        "country": "United States",
+        "year": 2023,
+        "co2_per_capita_tonnes": 13.64
+      },
+      {
+        "country": "United States",
+        "year": 2024,
+        "co2_per_capita_tonnes": 13.59
+      }
+    ]
+  },
+  "mark": {
+    "type": "line",
+    "strokeWidth": 3,
+    "interpolate": "linear",
+    "point": {
+      "filled": true,
+      "size": 24
+    }
+  },
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "quantitative",
+      "title": "Year",
+      "scale": {
+        "domain": [
+          1970,
+          2024
+        ],
+        "nice": false,
+        "zero": false
+      },
+      "axis": {
+        "values": [
+          1970,
+          1975,
+          1980,
+          1985,
+          1990,
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ],
+        "format": "d",
+        "labelAngle": 0,
+        "grid": false
+      }
+    },
+    "y": {
+      "field": "co2_per_capita_tonnes",
+      "type": "quantitative",
+      "title": "CO₂ emissions (tonnes/person/year)",
+      "scale": {
+        "domain": [
+          0,
+          25
+        ],
+        "nice": false
+      },
+      "axis": {
+        "values": [
+          0,
+          5,
+          10,
+          15,
+          20,
+          25
+        ],
+        "grid": true
+      }
+    },
+    "color": {
+      "field": "country",
+      "type": "nominal",
+      "scale": {
+        "domain": [
+          "China",
+          "United States"
+        ],
+        "range": [
+          "#238443",
+          "#8c510a"
+        ]
+      },
+      "legend": {
+        "title": null,
+        "orient": "top",
+        "direction": "horizontal",
+        "symbolType": "stroke",
+        "symbolStrokeWidth": 3
+      }
+    },
+    "order": {
+      "field": "year",
+      "type": "quantitative"
+    },
+    "tooltip": [
+      {
+        "field": "country",
+        "type": "nominal",
+        "title": "Country"
+      },
+      {
+        "field": "year",
+        "type": "quantitative",
+        "title": "Year",
+        "format": "d"
+      },
+      {
+        "field": "co2_per_capita_tonnes",
+        "type": "quantitative",
+        "title": "CO₂ (tonnes/person/year)",
+        "format": ".2f"
+      }
+    ]
+  },
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 12,
+      "labelColor": "#222",
+      "titleFontSize": 13,
+      "titleFontWeight": 400,
+      "titleColor": "#222",
+      "titlePadding": 14,
+      "gridColor": "#deded8",
+      "domainColor": "#777",
+      "tickColor": "#777"
+    },
+    "legend": {
+      "labelFontSize": 14,
+      "labelColor": "#222",
+      "padding": 10
+    }
+  }
+}
