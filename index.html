@@ -200,6 +200,11 @@
     </div>
   </section>
 
+  <section class="map-section" aria-labelledby="per-capita-trend-heading">
+    <h2 id="per-capita-trend-heading" class="section-heading">CO₂ Emissions per Person over Time</h2>
+    <div id="per-capita-line" class="chart-slot" aria-label="Annual CO2 emissions per person in China and the United States, 1970 to 2024"></div>
+  </section>
+
 
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
@@ -220,6 +225,7 @@
     embedChart("#emissions-chart", "./co2-bar-chart.vl.json");
     embedChart("#co2-treemap", "./co2-treemap.vl.json?v=distinct-palette-2");
     embedChart("#per-capita-map", "./co2-per-capita-map.vl.json?v=nodata-dark-grey-2");
+    embedChart("#per-capita-line", "./co2-per-capita-line.vl.json");
   </script>
 </body>
 </html>
