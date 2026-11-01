@@ -1,12 +1,18 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "100-cell waffle showing the composition of US energy-related CO2 emissions in 2024. Source: EIA Table 1, May 2026 MER edition. Rounded sector values sum to 4788 Mt, compared with the separately rounded total of 4789 Mt. Shares use the sum of sectors as the denominator and largest-remainder rounding to total 100.00%; whole waffle cells total 100. Alternating row directions keep each sector connected across row boundaries.",
+  "description": "100-cell waffle comparing US energy-related CO2 emissions by sector in 2007 and 2024. Source: EIA Monthly Energy Review May 2026, Tables 11.2–11.6, Annual Data sheets. Direct sector emissions exclude allocated electric power emissions to avoid double counting. Sector values rounded to million tonnes, shares use their sum and largest-remainder rounding to total 100.00%; whole waffle cells total 100. Alternating row directions keep each sector connected.",
   "width": 500,
   "height": 500,
   "background": "#faf8f1",
   "padding": 0,
+  "params": [
+    {
+      "name": "selectedYear",
+      "value": 2024
+    }
+  ],
   "data": {
-    "url": "./us_energy_co2_by_sector_2024.csv",
+    "url": "./us_energy_co2_by_sector_2007_2024.csv",
     "format": {
       "type": "csv",
       "parse": {
@@ -19,6 +25,13 @@
   },
   "transform": [
     {
+      "filter": "datum.year === selectedYear"
+    },
+    {
+      "calculate": "indexof(['Transportation', 'Electric power', 'Industrial', 'Residential', 'Commercial'], datum.sector)",
+      "as": "sector_order"
+    },
+    {
       "window": [
         {
           "op": "sum",
@@ -28,8 +41,8 @@
       ],
       "sort": [
         {
-          "field": "co2_million_tonnes",
-          "order": "descending"
+          "field": "sector_order",
+          "order": "ascending"
         }
       ],
       "frame": [
