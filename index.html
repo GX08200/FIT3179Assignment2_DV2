@@ -127,6 +127,15 @@
       line-height: 1.7;
       font-family: Verdana, Geneva, sans-serif;
     }
+
+    .map-section { max-width: 1200px; margin: 48px auto; padding: 0 24px; }
+    .map-section .section-heading { margin-bottom: 22px; }
+    .map-legend { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; margin: 8px 0 20px; font: 14px Arial, sans-serif; color: #222; }
+    .map-legend span { display: inline-flex; align-items: center; gap: 7px; }
+    .map-legend i { display: inline-block; width: 28px; height: 16px; border: 1px solid #a8bac7; }
+    .map-note { font-family: Verdana, Geneva, sans-serif; font-size: 14px; line-height: 1.7; color: #444; }
+    .no-data-key { display: inline-block; width: 14px; height: 14px; background: #d9d9d9; border: 1px solid #aaa; vertical-align: -2px; margin-right: 5px; }
+    @media (max-width: 900px) { .map-section { padding: 0 16px; } }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -171,11 +180,27 @@
     </section>
   </main>
 
+  <section class="map-section" aria-labelledby="per-capita-heading">
+    <h2 id="per-capita-heading" class="section-heading">CO₂ Emissions per Person in 2024</h2>
+    <div id="per-capita-map" class="chart-slot" aria-label="World map of annual CO2 emissions per person in 2024"></div>
+    <div class="map-legend" aria-label="Annual CO2 emissions in tonnes per person: five colour classes">
+      <strong>CO₂ (tonnes/person/year)</strong>
+      <span><i style="background:#eff3ff" aria-hidden="true"></i>&lt; 1</span>
+      <span><i style="background:#bdd7e7" aria-hidden="true"></i>1 to &lt; 5</span>
+      <span><i style="background:#6baed6" aria-hidden="true"></i>5 to &lt; 10</span>
+      <span><i style="background:#3182bd" aria-hidden="true"></i>10 to &lt; 20</span>
+      <span><i style="background:#08519c" aria-hidden="true"></i>20 or more</span>
+    </div>
+    <p class="map-note"><span class="no-data-key" aria-hidden="true"></span>Grey: no matching data. Colours show annual CO₂ emissions per person, in tonnes: below 1, 1 to below 5, 5 to below 10, 10 to below 20, and 20 or more. Hover over a country for its values.</p>
+    <p class="map-note">This Natural Earth 1:110m map matches 167 of the 207 country and territory records. Some small countries and territories are not represented. Values are used as published by Worldometer; some reporting areas combine countries or territories, as noted in the tooltips. Sources: <a href="https://www.worldometers.info/co2-emissions/co2-emissions-by-country/">Worldometer (2024)</a> and <a href="https://www.naturalearthdata.com/">Natural Earth</a>.</p>
+  </section>
+
+
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
     async function embedChart(selector, specificationUrl) {
       try {
-        const response = await fetch(specificationUrl);
+        const response = await fetch(specificationUrl, {cache: "no-store"});
         if (!response.ok) throw new Error(`Cannot load ${specificationUrl}`);
         const spec = await response.json();
         spec.width = "container";
@@ -189,6 +214,7 @@
     }
     embedChart("#emissions-chart", "./co2-bar-chart.vl.json");
     embedChart("#co2-treemap", "./co2-treemap.vl.json?v=distinct-palette-2");
+    embedChart("#per-capita-map", "./co2-per-capita-map.vl.json");
   </script>
 </body>
 </html>
