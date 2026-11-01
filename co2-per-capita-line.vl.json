@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "description": "Annual CO2 emissions per person in China and the United States, 1970–2024. All 55 annual observations per country are retained from china_co2_emissions_1970_2024.csv and us_co2_emissions_1970_2024.csv, sourced from Worldometer country history tables. Five-year x-axis ticks affect labels only, not the data.",
+  "description": "Annual CO2 emissions per person in China and the United States, 1970–2024. All 55 annual observations per country are retained from china_co2_emissions_1970_2024.csv and us_co2_emissions_1970_2024.csv, sourced from Worldometer country history tables. The x-axis extends to 2025 with five-year ticks and an additional 2024 label. Observations stop at 2024; no 2025 data are inferred.",
   "width": 1000,
   "height": 440,
   "background": "#faf8f1",
@@ -329,7 +329,7 @@
       {
         "country": "United States",
         "year": 1979,
-        "co2_per_capita_tonnes": 22.0
+        "co2_per_capita_tonnes": 22
       },
       {
         "country": "United States",
@@ -575,7 +575,7 @@
       "scale": {
         "domain": [
           1970,
-          2024
+          2025
         ],
         "nice": false,
         "zero": false
@@ -592,11 +592,18 @@
           2005,
           2010,
           2015,
-          2020
+          2020,
+          2024,
+          2025
         ],
         "format": "d",
         "labelAngle": 0,
-        "grid": false
+        "grid": false,
+        "labelOverlap": false,
+        "labelFlush": false,
+        "labelAlign": {
+          "expr": "datum.value === 2024 ? 'right' : datum.value === 2025 ? 'left' : 'center'"
+        }
       }
     },
     "y": {
