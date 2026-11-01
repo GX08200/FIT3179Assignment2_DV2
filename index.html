@@ -136,6 +136,15 @@
     .map-note { font-family: Verdana, Geneva, sans-serif; font-size: 14px; line-height: 1.7; color: #444; }
     .no-data-key { display: inline-block; width: 14px; height: 14px; background: #737373; border: 1px solid #aaa; vertical-align: -2px; margin-right: 5px; }
     @media (max-width: 900px) { .map-section { padding: 0 16px; } }
+
+    .waffle-layout { display: grid; grid-template-columns: minmax(0, 500px) minmax(0, 1fr); gap: 40px; align-items: center; margin-top: 24px; }
+    .waffle-chart { width: 100%; max-width: 500px; min-width: 0; }
+    .sector-table { width: 100%; border-collapse: collapse; font: 16px/1.6 Verdana, Geneva, sans-serif; color: #222; }
+    .sector-table th, .sector-table td { text-align: left; padding: 14px 8px; border-bottom: 1px solid #deded8; }
+    .sector-table th:last-child, .sector-table td:last-child { text-align: right; white-space: nowrap; }
+    .sector-swatch { display: inline-block; width: 17px; height: 17px; margin-right: 12px; vertical-align: -2px; border-radius: 2px; }
+    .sector-table tfoot { font-weight: 700; }
+    @media (max-width: 900px) { .waffle-layout { grid-template-columns: 1fr; gap: 24px; } }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -209,6 +218,27 @@
     </div>
   </section>
 
+  <section class="map-section" aria-labelledby="us-sector-heading">
+    <h2 id="us-sector-heading" class="section-heading">U.S. Energy-Related CO₂ Emissions by Sector (2024)</h2>
+    <p class="figure-description">100 squares represent 100% of U.S. energy-related CO₂ emissions.</p>
+    <div class="waffle-layout">
+      <div id="us-sector-waffle" class="waffle-chart" aria-label="100-square waffle chart of US energy-related carbon dioxide emissions by sector in 2024"></div>
+      <table class="sector-table" aria-label="Sector shares of US energy-related CO2 emissions in 2024">
+        <thead><tr><th scope="col">Sector</th><th scope="col">Share</th></tr></thead>
+        <tbody>
+          <tr><td><span class="sector-swatch" style="background:#2166ac" aria-hidden="true"></span>Transportation</td><td>38.91%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#8c510a" aria-hidden="true"></span>Electric power</td><td>29.80%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#7253a0" aria-hidden="true"></span>Industrial</td><td>19.95%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#9d7a00" aria-hidden="true"></span>Residential</td><td>6.35%</td></tr>
+          <tr><td><span class="sector-swatch" style="background:#66717d" aria-hidden="true"></span>Commercial</td><td>4.99%</td></tr>
+        </tbody><tfoot><tr><td>Total</td><td>100.00%</td></tr></tfoot>
+      </table>
+    </div>
+    <p class="map-note">Each square represents approximately 1%. Whole-square rounding gives 39 transportation, 30 electric power, 20 industrial, 6 residential and 5 commercial squares. The table shows shares to two decimal places.</p>
+    <p class="map-note">Electricity-generation emissions are assigned to electric power, rather than counted again in the other sectors. This chart covers energy-related CO₂ only, using a different scope from the Worldometer inventory above.</p>
+    <p class="map-note">Source: <a href="https://www.eia.gov/environment/emissions/carbon/">U.S. Energy Information Administration (EIA), Table 1, 2024 data</a>, Monthly Energy Review, May 2026 edition. Shares use the sum of the five rounded sector values (4,788 million tonnes); EIA reports a separately rounded total of 4,789 million tonnes. Percentages are rounded to total 100.00%. <a href="./us_energy_co2_by_sector_2024.csv" download>Download CSV</a>.</p>
+  </section>
+
 
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
@@ -218,7 +248,7 @@
         if (!response.ok) throw new Error(`Cannot load ${specificationUrl}`);
         const spec = await response.json();
         spec.width = "container";
-        spec.height = 500;
+        spec.height = selector === "#us-sector-waffle" ? Math.min(500, document.querySelector(selector).clientWidth) : 500;
         spec.autosize = {type: "fit", contains: "padding", resize: true};
         await vegaEmbed(selector, spec, {actions: false});
       } catch (error) {
@@ -230,6 +260,7 @@
     embedChart("#co2-treemap", "./co2-treemap.vl.json?v=distinct-palette-2");
     embedChart("#per-capita-map", "./co2-per-capita-map.vl.json?v=nodata-dark-grey-2");
     embedChart("#per-capita-line", "./co2-per-capita-line.vl.json");
+    embedChart("#us-sector-waffle", "./us-sector-waffle.vl.json");
   </script>
 </body>
 </html>
