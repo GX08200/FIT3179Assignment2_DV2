@@ -147,6 +147,7 @@
     @media (max-width: 900px) { .waffle-layout { grid-template-columns: 1fr; gap: 24px; } }
     .year-control { display: flex; gap: 12px; align-items: center; margin-top: 20px; font: 16px Verdana, Geneva, sans-serif; color: #222; }
     .year-control select { padding: 8px 14px; border: 1px solid #777; border-radius: 4px; background: #fff; color: #222; font: inherit; cursor: pointer; }
+    #fossil-fuel-symbol-map { width: 100%; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -247,6 +248,14 @@
   </section>
 
 
+  <section class="map-section" aria-labelledby="fossil-fuel-heading">
+    <h2 id="fossil-fuel-heading" class="section-heading">Fossil Fuel Consumption by Country (2025)</h2>
+    <p class="figure-description">Circle area represents total consumption of coal, oil and gas, measured in terawatt-hours (TWh). Hover over a circle to see the country and its value.</p>
+    <div id="fossil-fuel-symbol-map" aria-label="Proportional symbol world map of fossil fuel consumption in 2025"></div>
+    <p class="map-note">The dataset currently contains 2025 observations for 79 countries and territories, all shown on the map. Grey land provides geographic context. Countries without 2025 data have no circle and are not treated as zero consumption.</p>
+    <p class="map-note">Source: <a href="https://ourworldindata.org/grapher/fossil-fuels?fuel=total&amp;metric=consumption&amp;per_capita=total">Energy Institute and other sources, processed by Our World in Data</a> (updated June 30, 2026). Country label locations and boundaries: <a href="https://www.naturalearthdata.com/">Natural Earth</a>. <a href="./fossil_fuel_consumption_2025.csv" download>Download CSV (2025)</a>.</p>
+  </section>
+
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
     async function embedChart(selector, specificationUrl) {
@@ -299,6 +308,7 @@
       }
     }
     initializeSectorWaffle();
+    embedChart("#fossil-fuel-symbol-map", "./fossil-fuel-symbol-map.vl.json");
   </script>
 </body>
 </html>
