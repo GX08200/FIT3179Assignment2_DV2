@@ -1,0 +1,514 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#faf8f1",
+  "spacing": 32,
+  "description": "Connected dot chart comparing supplied 2023 and 2024 total CO2 emissions for the top 20 emitters in 2024. Left axis is linear from 0 to 14000 million tonnes. Right panel independently shows the actual 2024 minus 2023 change from -40 to +160 million tonnes. No point positions or changes are exaggerated. 2023 hollow circles and 2024 filled circles distinguish overlapping observations; orange means increase and blue means decrease.",
+  "data": {
+    "url": "./co2_emissions_2023_2024_top20.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "Rank": "number",
+        "CO2 emissions 2023 (Mt)": "number",
+        "CO2 emissions 2024 (Mt)": "number",
+        "Change 2023-2024 (Mt)": "number",
+        "1 Year Change (%) as shown on Worldometer": "number"
+      }
+    }
+  },
+  "hconcat": [
+    {
+      "width": 680,
+      "height": 500,
+      "title": {
+        "text": "2023 and 2024 totals",
+        "anchor": "start",
+        "fontSize": 16,
+        "offset": 15
+      },
+      "encoding": {
+        "y": {
+          "field": "Country",
+          "type": "nominal",
+          "sort": [
+            "China",
+            "United States",
+            "India",
+            "Russia",
+            "Japan",
+            "Iran",
+            "Indonesia",
+            "Saudi Arabia",
+            "South Korea",
+            "Germany",
+            "Canada",
+            "Brazil",
+            "Mexico",
+            "Turkey",
+            "South Africa",
+            "Vietnam",
+            "Australia",
+            "Italy",
+            "Malaysia",
+            "United Kingdom"
+          ],
+          "title": null,
+          "axis": {
+            "labelFontSize": 13,
+            "labelLimit": 125,
+            "ticks": false,
+            "domain": false,
+            "labelPadding": 10,
+            "grid": true,
+            "gridColor": "#e4e3dd"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "title": "Country"
+          },
+          {
+            "field": "CO2 emissions 2023 (Mt)",
+            "title": "2023 emissions (Mt)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "CO2 emissions 2024 (Mt)",
+            "title": "2024 emissions (Mt)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "Change 2023-2024 (Mt)",
+            "title": "Change (Mt)",
+            "type": "quantitative",
+            "format": "+.2f"
+          },
+          {
+            "field": "1 Year Change (%) as shown on Worldometer",
+            "title": "Annual change (%)",
+            "type": "quantitative",
+            "format": "+.2f"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rule",
+            "strokeWidth": 3
+          },
+          "encoding": {
+            "x": {
+              "field": "CO2 emissions 2023 (Mt)",
+              "type": "quantitative",
+              "title": "Annual CO₂ emissions (million tonnes)",
+              "scale": {
+                "domain": [
+                  0,
+                  14000
+                ],
+                "zero": true,
+                "nice": false
+              },
+              "axis": {
+                "values": [
+                  0,
+                  2000,
+                  4000,
+                  6000,
+                  8000,
+                  10000,
+                  12000,
+                  14000
+                ],
+                "format": ",.0f",
+                "labelAngle": 0,
+                "grid": true
+              }
+            },
+            "x2": {
+              "field": "CO2 emissions 2024 (Mt)"
+            },
+            "color": {
+              "condition": {
+                "test": "datum['Change 2023-2024 (Mt)'] < 0",
+                "value": "#2166ac"
+              },
+              "value": "#b35806"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "fill": "#faf8f1",
+            "stroke": "#777777",
+            "strokeWidth": 2,
+            "size": 120,
+            "opacity": 1
+          },
+          "encoding": {
+            "x": {
+              "field": "CO2 emissions 2023 (Mt)",
+              "type": "quantitative",
+              "title": "Annual CO₂ emissions (million tonnes)",
+              "scale": {
+                "domain": [
+                  0,
+                  14000
+                ],
+                "zero": true,
+                "nice": false
+              },
+              "axis": {
+                "values": [
+                  0,
+                  2000,
+                  4000,
+                  6000,
+                  8000,
+                  10000,
+                  12000,
+                  14000
+                ],
+                "format": ",.0f",
+                "labelAngle": 0,
+                "grid": true
+              }
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "size": 48,
+            "opacity": 1
+          },
+          "encoding": {
+            "x": {
+              "field": "CO2 emissions 2024 (Mt)",
+              "type": "quantitative",
+              "title": "Annual CO₂ emissions (million tonnes)",
+              "scale": {
+                "domain": [
+                  0,
+                  14000
+                ],
+                "zero": true,
+                "nice": false
+              },
+              "axis": {
+                "values": [
+                  0,
+                  2000,
+                  4000,
+                  6000,
+                  8000,
+                  10000,
+                  12000,
+                  14000
+                ],
+                "format": ",.0f",
+                "labelAngle": 0,
+                "grid": true
+              }
+            },
+            "color": {
+              "condition": {
+                "test": "datum['Change 2023-2024 (Mt)'] < 0",
+                "value": "#2166ac"
+              },
+              "value": "#b35806"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "width": 260,
+      "height": 500,
+      "title": {
+        "text": "Annual change (enlarged scale)",
+        "anchor": "start",
+        "fontSize": 16,
+        "offset": 15
+      },
+      "encoding": {
+        "y": {
+          "field": "Country",
+          "type": "nominal",
+          "sort": [
+            "China",
+            "United States",
+            "India",
+            "Russia",
+            "Japan",
+            "Iran",
+            "Indonesia",
+            "Saudi Arabia",
+            "South Korea",
+            "Germany",
+            "Canada",
+            "Brazil",
+            "Mexico",
+            "Turkey",
+            "South Africa",
+            "Vietnam",
+            "Australia",
+            "Italy",
+            "Malaysia",
+            "United Kingdom"
+          ],
+          "title": null,
+          "axis": null
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "title": "Country"
+          },
+          {
+            "field": "CO2 emissions 2023 (Mt)",
+            "title": "2023 emissions (Mt)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "CO2 emissions 2024 (Mt)",
+            "title": "2024 emissions (Mt)",
+            "type": "quantitative",
+            "format": ",.2f"
+          },
+          {
+            "field": "Change 2023-2024 (Mt)",
+            "title": "Change (Mt)",
+            "type": "quantitative",
+            "format": "+.2f"
+          },
+          {
+            "field": "1 Year Change (%) as shown on Worldometer",
+            "title": "Annual change (%)",
+            "type": "quantitative",
+            "format": "+.2f"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "data": {
+            "values": [
+              {}
+            ]
+          },
+          "mark": {
+            "type": "rule",
+            "color": "#555",
+            "strokeWidth": 1.2
+          },
+          "encoding": {
+            "y": {
+              "value": 0
+            },
+            "y2": {
+              "value": 500
+            },
+            "tooltip": null,
+            "x": {
+              "datum": 0,
+              "type": "quantitative",
+              "scale": {
+                "domain": [
+                  -40,
+                  160
+                ]
+              }
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "rule",
+            "strokeWidth": 3
+          },
+          "encoding": {
+            "x": {
+              "field": "Change 2023-2024 (Mt)",
+              "type": "quantitative",
+              "title": "Change in emissions (million tonnes)",
+              "scale": {
+                "domain": [
+                  -40,
+                  160
+                ],
+                "nice": false
+              },
+              "axis": {
+                "values": [
+                  -40,
+                  -20,
+                  0,
+                  20,
+                  40,
+                  60,
+                  80,
+                  100,
+                  120,
+                  140,
+                  160
+                ],
+                "format": "+.0f",
+                "labelExpr": "datum.value === 0 ? '0' : format(datum.value, '+.0f')",
+                "grid": true,
+                "labelFontSize": 10,
+                "labelOverlap": false
+              }
+            },
+            "x2": {
+              "datum": 0
+            },
+            "color": {
+              "condition": {
+                "test": "datum['Change 2023-2024 (Mt)'] < 0",
+                "value": "#2166ac"
+              },
+              "value": "#b35806"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "size": 45
+          },
+          "encoding": {
+            "x": {
+              "field": "Change 2023-2024 (Mt)",
+              "type": "quantitative",
+              "title": "Change in emissions (million tonnes)",
+              "scale": {
+                "domain": [
+                  -40,
+                  160
+                ],
+                "nice": false
+              },
+              "axis": {
+                "values": [
+                  -40,
+                  -20,
+                  0,
+                  20,
+                  40,
+                  60,
+                  80,
+                  100,
+                  120,
+                  140,
+                  160
+                ],
+                "format": "+.0f",
+                "labelExpr": "datum.value === 0 ? '0' : format(datum.value, '+.0f')",
+                "grid": true,
+                "labelFontSize": 10,
+                "labelOverlap": false
+              }
+            },
+            "color": {
+              "condition": {
+                "test": "datum['Change 2023-2024 (Mt)'] < 0",
+                "value": "#2166ac"
+              },
+              "value": "#b35806"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "calculate": "format(datum['Change 2023-2024 (Mt)'], '+.2f')",
+              "as": "change_label"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": {
+              "expr": "datum['Change 2023-2024 (Mt)'] < 0 ? 'right' : 'left'"
+            },
+            "dx": {
+              "expr": "datum['Change 2023-2024 (Mt)'] < 0 ? -7 : 7"
+            },
+            "fontSize": 11,
+            "color": "#222"
+          },
+          "encoding": {
+            "x": {
+              "field": "Change 2023-2024 (Mt)",
+              "type": "quantitative",
+              "title": "Change in emissions (million tonnes)",
+              "scale": {
+                "domain": [
+                  -40,
+                  160
+                ],
+                "nice": false
+              },
+              "axis": {
+                "values": [
+                  -40,
+                  -20,
+                  0,
+                  20,
+                  40,
+                  60,
+                  80,
+                  100,
+                  120,
+                  140,
+                  160
+                ],
+                "format": "+.0f",
+                "labelExpr": "datum.value === 0 ? '0' : format(datum.value, '+.0f')",
+                "grid": true,
+                "labelFontSize": 10,
+                "labelOverlap": false
+              }
+            },
+            "text": {
+              "field": "change_label"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "resolve": {
+    "scale": {
+      "x": "independent",
+      "y": "shared"
+    }
+  },
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelColor": "#222",
+      "titleColor": "#222",
+      "titleFontSize": 13,
+      "titlePadding": 16,
+      "gridColor": "#e2e1db",
+      "domainColor": "#777",
+      "tickColor": "#777"
+    },
+    "title": {
+      "color": "#222"
+    }
+  }
+}
