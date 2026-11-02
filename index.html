@@ -148,6 +148,14 @@
     .year-control { display: flex; gap: 12px; align-items: center; margin-top: 20px; font: 16px Verdana, Geneva, sans-serif; color: #222; }
     .year-control select { padding: 8px 14px; border: 1px solid #777; border-radius: 4px; background: #fff; color: #222; font: inherit; cursor: pointer; }
     #fossil-fuel-symbol-map { width: 100%; }
+    .dot-legend { display:flex; flex-wrap:wrap; gap:24px; margin:20px 0; color:#222; font:14px Verdana,sans-serif; }
+    .dot-legend span { display:inline-flex; align-items:center; gap:8px; }
+    .dot-key { display:inline-block; width:9px; height:9px; border-radius:50%; }
+    .dot-key.hollow { background:#faf8f1; border:2px solid #777; }
+    .dot-key.rise { background:#b35806; }
+    .dot-key.fall { background:#2166ac; }
+    .dot-scroll { overflow-x:auto; }
+    #co2-connected-dot { width:100%; min-width:1000px; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -260,6 +268,15 @@
     </div>
   </section>
 
+  <section class="map-section" aria-labelledby="connected-dot-heading">
+    <h2 id="connected-dot-heading" class="section-heading">CO₂ Emissions of the Top 20 Emitters: 2023 vs 2024</h2>
+    <p class="figure-description">Connected dots compare each country’s annual emissions. The left axis starts at zero. The aligned panel on the right uses a separate, enlarged scale to show the actual annual change.</p>
+    <div class="dot-legend" aria-label="Chart legend"><span><i class="dot-key hollow"></i>2023</span><span><i class="dot-key rise"></i>2024, emissions rose</span><span><i class="dot-key fall"></i>2024, emissions fell</span></div>
+    <div class="dot-scroll"><div id="co2-connected-dot" aria-label="Connected dot chart comparing CO2 emissions in 2023 and 2024, with annual changes"></div></div>
+    <p class="map-note">Countries are ordered by their 2024 total emissions. Units: million tonnes of CO₂ (Mt). The change panel shows 2024 minus 2023, with negative values indicating a decrease. Hover over either panel for both years, the change in Mt and the annual percentage change.</p>
+    <p class="map-note">Data: <a href="./co2_emissions_2023_2024_top20.csv" download>Download the supplied 2023–2024 CSV</a>. Annual percentage changes are those recorded in the supplied file, labelled as shown on <a href="https://www.worldometers.info/co2-emissions/co2-emissions-by-country/">Worldometer</a>. Values are retained at the precision provided in the CSV.</p>
+  </section>
+
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
     async function embedChart(selector, specificationUrl) {
@@ -267,6 +284,12 @@
         const response = await fetch(specificationUrl, {cache: "no-store"});
         if (!response.ok) throw new Error(`Cannot load ${specificationUrl}`);
         const spec = await response.json();
+        if (selector === "#co2-connected-dot") {
+          const width = Math.max(1000, document.querySelector(selector).clientWidth);
+          spec.hconcat[0].width = Math.round((width - 210) * 0.70);
+          spec.hconcat[1].width = Math.round((width - 210) * 0.30);
+          return await vegaEmbed(selector, spec, {actions: false});
+        }
         spec.width = "container";
         spec.height = selector === "#us-sector-waffle" ? Math.min(500, document.querySelector(selector).clientWidth) : 500;
         spec.autosize = {type: "fit", contains: "padding", resize: true};
@@ -312,6 +335,7 @@
       }
     }
     initializeSectorWaffle();
+    embedChart("#co2-connected-dot", "./co2-connected-dot.vl.json");
     embedChart("#fossil-fuel-symbol-map", "./fossil-fuel-symbol-map.vl.json");
   </script>
 </body>
