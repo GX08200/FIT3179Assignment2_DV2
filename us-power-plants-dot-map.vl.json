@@ -1,0 +1,133 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1100,
+  "height": 650,
+  "background": "#faf8f1",
+  "padding": 10,
+  "description": "One equal-sized dot per unique EIA plant with at least one operating (OP) non-battery/non-flywheel/non-compressed-air generator in the 2025 EIA-860 inventory, 50 states and DC. Coordinates are from EIA Plant file. Natural Earth 1:50m state boundaries. Albers USA projection includes Alaska and Hawaii insets. Dot size does not encode emissions, capacity or generation. Primary energy is the largest group by operating nameplate capacity at each plant.",
+  "projection": {
+    "type": "albersUsa"
+  },
+  "params": [
+    {
+      "name": "plantFuel",
+      "value": "All",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All",
+          "Natural gas",
+          "Coal",
+          "Petroleum",
+          "Nuclear",
+          "Solar",
+          "Wind",
+          "Hydro",
+          "Biomass / waste",
+          "Geothermal",
+          "Other"
+        ],
+        "name": "Primary energy: "
+      }
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "./us-states-natural-earth.geojson",
+        "format": {
+          "type": "json",
+          "property": "features"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e4e5e0",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.7
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "properties.name",
+            "title": "State"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "./us_operating_power_plants_2025.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "plant_id": "number",
+            "year": "number",
+            "latitude": "number",
+            "longitude": "number",
+            "operating_capacity_mw": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "plantFuel === 'All' || datum.primary_energy === plantFuel"
+        }
+      ],
+      "mark": {
+        "type": "circle",
+        "size": 12,
+        "color": "#087f8c",
+        "opacity": 0.65,
+        "stroke": "#ffffff",
+        "strokeWidth": 0.15
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "tooltip": [
+          {
+            "field": "plant_name",
+            "title": "Power plant"
+          },
+          {
+            "field": "plant_id",
+            "title": "EIA plant code",
+            "type": "ordinal"
+          },
+          {
+            "field": "state",
+            "title": "State"
+          },
+          {
+            "field": "primary_energy",
+            "title": "Primary energy"
+          },
+          {
+            "field": "operating_capacity_mw",
+            "title": "Operating nameplate capacity (MW)",
+            "type": "quantitative",
+            "format": ",.1f"
+          },
+          {
+            "field": "year",
+            "title": "Inventory year",
+            "type": "ordinal"
+          }
+        ]
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial"
+  }
+}
