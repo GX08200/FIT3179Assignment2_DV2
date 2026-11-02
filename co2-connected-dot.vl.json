@@ -26,6 +26,22 @@
         "fontSize": 16,
         "offset": 15
       },
+      "transform": [
+        {
+          "fold": [
+            "CO2 emissions 2023 (Mt)",
+            "CO2 emissions 2024 (Mt)"
+          ],
+          "as": [
+            "year_field",
+            "annual_emissions"
+          ]
+        },
+        {
+          "calculate": "datum.year_field === 'CO2 emissions 2023 (Mt)' ? -5 : 5",
+          "as": "year_offset"
+        }
+      ],
       "encoding": {
         "y": {
           "field": "Country",
@@ -92,45 +108,54 @@
             "type": "quantitative",
             "format": "+.2f"
           }
-        ]
+        ],
+        "x": {
+          "field": "annual_emissions",
+          "type": "quantitative",
+          "title": "Annual CO₂ emissions (million tonnes)",
+          "scale": {
+            "domain": [
+              0,
+              14000
+            ],
+            "zero": true,
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              0,
+              2000,
+              4000,
+              6000,
+              8000,
+              10000,
+              12000,
+              14000
+            ],
+            "format": ",.0f",
+            "labelAngle": 0,
+            "grid": true
+          }
+        },
+        "yOffset": {
+          "field": "year_offset",
+          "type": "quantitative",
+          "scale": null
+        }
       },
       "layer": [
         {
           "mark": {
-            "type": "rule",
-            "strokeWidth": 3
+            "type": "line",
+            "strokeWidth": 1.5
           },
           "encoding": {
-            "x": {
-              "field": "CO2 emissions 2023 (Mt)",
-              "type": "quantitative",
-              "title": "Annual CO₂ emissions (million tonnes)",
-              "scale": {
-                "domain": [
-                  0,
-                  14000
-                ],
-                "zero": true,
-                "nice": false
-              },
-              "axis": {
-                "values": [
-                  0,
-                  2000,
-                  4000,
-                  6000,
-                  8000,
-                  10000,
-                  12000,
-                  14000
-                ],
-                "format": ",.0f",
-                "labelAngle": 0,
-                "grid": true
-              }
+            "detail": {
+              "field": "Country"
             },
-            "x2": {
-              "field": "CO2 emissions 2024 (Mt)"
+            "order": {
+              "field": "year_offset",
+              "type": "quantitative"
             },
             "color": {
               "condition": {
@@ -142,82 +167,34 @@
           }
         },
         {
+          "transform": [
+            {
+              "filter": "datum.year_offset < 0"
+            }
+          ],
           "mark": {
             "type": "point",
             "filled": true,
             "fill": "#faf8f1",
             "stroke": "#777777",
-            "strokeWidth": 2,
-            "size": 120,
+            "strokeWidth": 1.7,
+            "size": 65,
             "opacity": 1
-          },
-          "encoding": {
-            "x": {
-              "field": "CO2 emissions 2023 (Mt)",
-              "type": "quantitative",
-              "title": "Annual CO₂ emissions (million tonnes)",
-              "scale": {
-                "domain": [
-                  0,
-                  14000
-                ],
-                "zero": true,
-                "nice": false
-              },
-              "axis": {
-                "values": [
-                  0,
-                  2000,
-                  4000,
-                  6000,
-                  8000,
-                  10000,
-                  12000,
-                  14000
-                ],
-                "format": ",.0f",
-                "labelAngle": 0,
-                "grid": true
-              }
-            }
           }
         },
         {
+          "transform": [
+            {
+              "filter": "datum.year_offset > 0"
+            }
+          ],
           "mark": {
             "type": "point",
             "filled": true,
-            "size": 48,
+            "size": 45,
             "opacity": 1
           },
           "encoding": {
-            "x": {
-              "field": "CO2 emissions 2024 (Mt)",
-              "type": "quantitative",
-              "title": "Annual CO₂ emissions (million tonnes)",
-              "scale": {
-                "domain": [
-                  0,
-                  14000
-                ],
-                "zero": true,
-                "nice": false
-              },
-              "axis": {
-                "values": [
-                  0,
-                  2000,
-                  4000,
-                  6000,
-                  8000,
-                  10000,
-                  12000,
-                  14000
-                ],
-                "format": ",.0f",
-                "labelAngle": 0,
-                "grid": true
-              }
-            },
             "color": {
               "condition": {
                 "test": "datum['Change 2023-2024 (Mt)'] < 0",
