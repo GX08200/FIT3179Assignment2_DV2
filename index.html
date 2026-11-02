@@ -156,6 +156,9 @@
     .dot-key.fall { background:#2166ac; }
     .dot-scroll { overflow-x:auto; }
     #co2-connected-dot { width:100%; min-width:1000px; }
+    #us-power-plants-map { width:100%; }
+    #us-power-plants-map .vega-bindings { margin:18px 0; font:16px Verdana,sans-serif; color:#222; }
+    #us-power-plants-map select { font:inherit; padding:7px 12px; margin-left:8px; border:1px solid #777; border-radius:4px; background:#fff; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -281,6 +284,15 @@
     </div>
   </section>
 
+  <section class="map-section" aria-labelledby="us-plant-heading">
+    <h2 id="us-plant-heading" class="section-heading">U.S. Operating Power Plants (2025)</h2>
+    <p class="figure-description">Each equal-sized dot represents one of 13,348 power plants with operating generating units in the 2025 EIA-860 inventory. Hover over a dot for plant details, or use the primary-energy selector below the map.</p>
+    <div id="us-power-plants-map" aria-label="Dot map of 13,348 operating US power plants in 2025, including Alaska and Hawaii"></div>
+    <p class="map-note">Coverage: 50 states and Washington, DC. Alaska and Hawaii appear as insets at different scales. Plants are counted once by EIA plant code, with at least one generator classified as operating (OP). Proposed, retired, standby and out-of-service units are excluded, as are battery, flywheel and compressed-air storage units. EIA-860 generally covers plants with at least 1 MW of combined nameplate capacity; this is not a map of all rooftop solar installations.</p>
+    <p class="map-note">Primary energy is assigned from the largest share of operating nameplate capacity at each plant. Tooltip capacity sums the included operating generators and is not electricity generated. Dot size is constant and does not represent capacity, generation or CO₂ emissions.</p>
+    <p class="map-note">Sources: <a href="https://www.eia.gov/electricity/data/eia860/">U.S. Energy Information Administration, Form EIA-860 (2025)</a> (<a href="https://www.eia.gov/electricity/data/eia860/xls/eia8602025.zip">official data download</a>), Plant and Operable Generator files. State boundaries: <a href="https://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-1-states-provinces/">Natural Earth 1:50m Admin 1</a>. <a href="./us_operating_power_plants_2025.csv" download>Download power plant CSV</a>.</p>
+  </section>
+
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
     async function embedChart(selector, specificationUrl) {
@@ -295,7 +307,7 @@
           return await vegaEmbed(selector, spec, {actions: false});
         }
         spec.width = "container";
-        spec.height = selector === "#us-sector-waffle" ? Math.min(500, document.querySelector(selector).clientWidth) : 500;
+        spec.height = selector === "#us-sector-waffle" ? Math.min(500, document.querySelector(selector).clientWidth) : selector === "#us-power-plants-map" ? 620 : 500;
         spec.autosize = {type: "fit", contains: "padding", resize: true};
         return await vegaEmbed(selector, spec, {actions: false});
       } catch (error) {
@@ -339,6 +351,7 @@
       }
     }
     initializeSectorWaffle();
+    embedChart("#us-power-plants-map", "./us-power-plants-dot-map.vl.json");
     embedChart("#co2-connected-dot", "./co2-connected-dot.vl.json");
     embedChart("#fossil-fuel-symbol-map", "./fossil-fuel-symbol-map.vl.json");
   </script>
