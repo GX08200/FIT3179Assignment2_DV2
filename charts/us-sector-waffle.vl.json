@@ -12,7 +12,7 @@
     }
   ],
   "data": {
-    "url": "./us_energy_co2_by_sector_2007_2024.csv",
+    "url": "./data/us_energy_co2_by_sector_2007_2024.csv",
     "format": {
       "type": "csv",
       "parse": {
