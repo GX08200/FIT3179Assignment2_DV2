@@ -34,7 +34,7 @@
   "layer": [
     {
       "data": {
-        "url": "./us-states-natural-earth.geojson",
+        "url": "./maps/us-states-natural-earth.geojson",
         "format": {
           "type": "json",
           "property": "features"
@@ -57,7 +57,7 @@
     },
     {
       "data": {
-        "url": "./us_operating_power_plants_2025.csv",
+        "url": "./data/us_operating_power_plants_2025.csv",
         "format": {
           "type": "csv",
           "parse": {
