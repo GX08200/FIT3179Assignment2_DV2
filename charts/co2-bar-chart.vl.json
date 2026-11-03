@@ -4,7 +4,7 @@
   "width": 600,
   "height": 500,
   "data": {
-    "url": "./co2_emissions_2024_top20.csv",
+    "url": "./data/co2_emissions_2024_top20.csv",
     "format": {
       "type": "csv"
     }
