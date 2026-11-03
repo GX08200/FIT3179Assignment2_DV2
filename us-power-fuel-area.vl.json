@@ -1,0 +1,213 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1100,
+  "height": 470,
+  "background": "#faf8f1",
+  "padding": 15,
+  "description": "US electric power sector direct CO2 emissions by fuel, annual 1973–2024. EIA Monthly Energy Review May 2026 Table 11.6. Petroleum uses the petroleum total column once, not its constituent fuel columns again. Other reported sources is the rounded residual of published total minus coal, natural gas and petroleum, including reported geothermal and non-biomass waste. This is an emissions fuel mix, not the electricity generation mix.",
+  "data": {
+    "url": "./us_power_co2_by_fuel_1973_2024.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "co2_million_tonnes": "number",
+        "total_co2_million_tonnes": "number"
+      }
+    }
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "calculate": "indexof(['Coal','Natural gas','Petroleum','Other reported sources'],datum.fuel)",
+          "as": "fuel_order"
+        }
+      ],
+      "mark": {
+        "type": "area",
+        "opacity": 0.9
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative",
+          "title": "Year",
+          "scale": {
+            "domain": [
+              1973,
+              2024
+            ],
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              1975,
+              1980,
+              1985,
+              1990,
+              1995,
+              2000,
+              2005,
+              2010,
+              2015,
+              2020,
+              2024
+            ],
+            "format": "d",
+            "labelAngle": 0
+          }
+        },
+        "y": {
+          "field": "co2_million_tonnes",
+          "type": "quantitative",
+          "stack": "zero",
+          "title": "CO₂ emissions (million tonnes)",
+          "scale": {
+            "domain": [
+              0,
+              2600
+            ],
+            "nice": false
+          },
+          "axis": {
+            "values": [
+              0,
+              500,
+              1000,
+              1500,
+              2000,
+              2500
+            ]
+          }
+        },
+        "order": {
+          "field": "fuel_order",
+          "type": "quantitative",
+          "sort": "ascending"
+        },
+        "color": {
+          "field": "fuel",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Coal",
+              "Natural gas",
+              "Petroleum",
+              "Other reported sources"
+            ],
+            "range": [
+              "#303030",
+              "#D55E00",
+              "#6B3E26",
+              "#7F8C8D"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "direction": "horizontal"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "year",
+            "title": "Year",
+            "type": "ordinal"
+          },
+          {
+            "field": "fuel",
+            "title": "Fuel"
+          },
+          {
+            "field": "co2_million_tonnes",
+            "title": "Fuel emissions (Mt)",
+            "type": "quantitative",
+            "format": ",.3f"
+          },
+          {
+            "field": "total_co2_million_tonnes",
+            "title": "All-fuel total (Mt)",
+            "type": "quantitative",
+            "format": ",.3f"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2007
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "stroke": "#3d3d3d",
+        "strokeDash": [
+          5,
+          4
+        ],
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "year": 2007,
+            "value": 2540,
+            "label": "2007"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "right",
+        "dx": -6,
+        "fontSize": 12,
+        "color": "#222"
+      },
+      "encoding": {
+        "x": {
+          "field": "year",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "value",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelColor": "#222",
+      "titleColor": "#222",
+      "labelFontSize": 12,
+      "titleFontSize": 14,
+      "titlePadding": 15,
+      "gridColor": "#deded8"
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 14,
+      "labelColor": "#222",
+      "titleColor": "#222"
+    }
+  }
+}
