@@ -1,0 +1,8 @@
+step,order,start_mt,end_mt,value_mt,kind,label,next_step
+2007 total,0,0,6015,6015,Total,6015,Electric power
+Electric power,1,6015,5020,-995,Decrease,-995,Transportation
+Transportation,2,5020,4862,-158,Decrease,-158,Industrial
+Industrial,3,4862,4806,-56,Decrease,-56,Residential
+Residential,4,4806,4766,-40,Decrease,-40,Commercial
+Commercial,5,4766,4788,22,Increase,+22,2024 total
+2024 total,6,0,4788,4788,Total,4788,
