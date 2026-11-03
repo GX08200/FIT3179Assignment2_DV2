@@ -1,0 +1,194 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1100,
+  "height": 470,
+  "background": "#faf8f1",
+  "padding": 15,
+  "description": "Country-level total CO2 emissions versus source per-capita CO2 emissions in 2024. All 207 countries and territories from the original Worldometer CSV. X uses log10 because total emissions span many orders of magnitude; equal spacing represents tenfold multiples. Y is linear and starts at zero. Country search highlights matches without changing the data. This is descriptive association, not evidence of causation.",
+  "params": [
+    {
+      "name": "countryQuery",
+      "value": "",
+      "bind": {
+        "input": "text",
+        "placeholder": "e.g. China",
+        "name": "Highlight country: "
+      }
+    }
+  ],
+  "data": {
+    "url": "./co2_emissions_by_country_2024_no_extra_column.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "CO2 emissions (tons 2024)": "number",
+        "Per Capita (tons)": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "filter": "isValid(datum['CO2 emissions (tons 2024)']) && datum['CO2 emissions (tons 2024)'] > 0 && isValid(datum['Per Capita (tons)'])"
+    },
+    {
+      "calculate": "datum['CO2 emissions (tons 2024)']/1000000",
+      "as": "total_mt"
+    },
+    {
+      "calculate": "countryQuery !== '' && indexof(lower(datum.Country),lower(countryQuery)) >= 0",
+      "as": "matches_search"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "total_mt",
+      "type": "quantitative",
+      "scale": {
+        "type": "log",
+        "base": 10,
+        "domain": [
+          0.001,
+          20000
+        ],
+        "nice": false
+      },
+      "title": "Annual CO₂ emissions (million tonnes, logarithmic scale)",
+      "axis": {
+        "values": [
+          0.01,
+          0.1,
+          1,
+          10,
+          100,
+          1000,
+          10000
+        ],
+        "format": ",~g"
+      }
+    },
+    "y": {
+      "field": "Per Capita (tons)",
+      "type": "quantitative",
+      "scale": {
+        "domain": [
+          0,
+          70
+        ],
+        "nice": false
+      },
+      "title": "CO₂ emissions per person (tonnes/year)",
+      "axis": {
+        "values": [
+          0,
+          10,
+          20,
+          30,
+          40,
+          50,
+          60,
+          70
+        ]
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "stroke": "#ffffff",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "size": {
+          "condition": {
+            "test": "datum.matches_search",
+            "value": 160
+          },
+          "value": 65
+        },
+        "color": {
+          "condition": [
+            {
+              "test": "datum.matches_search",
+              "value": "#D55E00"
+            },
+            {
+              "test": "indexof([\"China\",\"United States\",\"India\",\"Qatar\",\"Palau\"],datum.Country)>=0",
+              "value": "#2166ac"
+            }
+          ],
+          "value": "#66717d"
+        },
+        "opacity": {
+          "condition": {
+            "test": "countryQuery === '' || datum.matches_search",
+            "value": 0.85
+          },
+          "value": 0.18
+        },
+        "tooltip": [
+          {
+            "field": "Country",
+            "title": "Country / territory"
+          },
+          {
+            "field": "total_mt",
+            "title": "Total CO₂ emissions (Mt)",
+            "type": "quantitative",
+            "format": ",.3f"
+          },
+          {
+            "field": "Per Capita (tons)",
+            "title": "CO₂ per person (tonnes/year)",
+            "type": "quantitative",
+            "format": ".2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "indexof([\"China\",\"United States\",\"India\",\"Qatar\",\"Palau\"],datum.Country)>=0 || datum.matches_search"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "dy": -9,
+        "align": {
+          "expr": "datum.Country === 'China' ? 'right' : 'left'"
+        },
+        "dx": {
+          "expr": "datum.Country === 'China' ? -7 : 7"
+        },
+        "color": "#222"
+      },
+      "encoding": {
+        "text": {
+          "field": "Country"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelColor": "#222",
+      "titleColor": "#222",
+      "labelFontSize": 12,
+      "titleFontSize": 14,
+      "titlePadding": 15,
+      "gridColor": "#deded8"
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 14,
+      "labelColor": "#222",
+      "titleColor": "#222"
+    }
+  }
+}
