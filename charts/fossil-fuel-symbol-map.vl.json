@@ -11,7 +11,7 @@
   "layer": [
     {
       "data": {
-        "url": "./world.topojson",
+        "url": "./maps/world.topojson",
         "format": {
           "type": "topojson",
           "feature": "ne_110m_admin_0_countries"
@@ -31,7 +31,7 @@
     },
     {
       "data": {
-        "url": "./fossil_fuel_consumption_2025.csv",
+        "url": "./data/fossil_fuel_consumption_2025.csv",
         "format": {
           "type": "csv",
           "parse": {
