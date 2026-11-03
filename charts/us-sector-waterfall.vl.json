@@ -6,7 +6,7 @@
   "padding": 15,
   "description": "Waterfall decomposing the change in US energy-related CO2 emissions from 2007 to 2024. Endpoints sum the same rounded direct sector values used in Figure 5; electricity emissions are counted once in Electric power. All values million tonnes CO2. Intermediate bars are changes, not sector total emissions.",
   "data": {
-    "url": "./us_sector_co2_waterfall_2007_2024.csv",
+    "url": "./data/us_sector_co2_waterfall_2007_2024.csv",
     "format": {
       "type": "csv",
       "parse": {
