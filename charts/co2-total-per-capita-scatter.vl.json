@@ -17,7 +17,7 @@
     }
   ],
   "data": {
-    "url": "./co2_emissions_by_country_2024_no_extra_column.csv",
+    "url": "./data/co2_emissions_by_country_2024_no_extra_column.csv",
     "format": {
       "type": "csv",
       "parse": {
