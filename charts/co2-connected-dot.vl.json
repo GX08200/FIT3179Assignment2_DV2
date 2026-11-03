@@ -4,7 +4,7 @@
   "spacing": 32,
   "description": "Connected dot chart comparing supplied 2023 and 2024 total CO2 emissions for the top 20 emitters in 2024. Left axis is linear from 0 to 14000 million tonnes. Right panel independently shows the actual 2024 minus 2023 change from -40 to +160 million tonnes. No point positions or changes are exaggerated. 2023 hollow circles and 2024 filled circles distinguish overlapping observations; orange means increase and blue means decrease.",
   "data": {
-    "url": "./co2_emissions_2023_2024_top20.csv",
+    "url": "./data/co2_emissions_2023_2024_top20.csv",
     "format": {
       "type": "csv",
       "parse": {
