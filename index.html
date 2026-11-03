@@ -159,6 +159,11 @@
     #us-power-plants-map { width:100%; }
     #us-power-plants-map .vega-bindings { margin:18px 0; font:16px Verdana,sans-serif; color:#222; }
     #us-power-plants-map select { font:inherit; padding:7px 12px; margin-left:8px; border:1px solid #777; border-radius:4px; background:#fff; }
+      #us-sector-waterfall, #us-power-fuel-area, #co2-total-per-capita-scatter { width: 100%; }
+    .new-chart-scroll { overflow-x: auto; }
+    #us-sector-waterfall { min-width: 760px; }
+    #co2-total-per-capita-scatter .vega-bindings { margin-top: 18px; font-size: 16px; }
+    #co2-total-per-capita-scatter input { padding: 7px 10px; margin-left: 8px; font-size: 16px; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/vega@5"></script>
 <script src="https://cdn.jsdelivr.net/npm/vega-lite@5"></script>
@@ -296,6 +301,29 @@
     </div>
   </section>
 
+
+  <section class="map-section" aria-labelledby="waterfall-heading">
+    <h2 id="waterfall-heading" class="section-heading">Where Did U.S. Emissions Fall? (2007–2024)</h2>
+    <p class="figure-description">Follow the change from the 2007 total to the 2024 total. Blue bars show sector reductions; orange shows an increase. Hover over each bar for its contribution.</p>
+    <div class="new-chart-scroll"><div id="us-sector-waterfall" aria-label="Waterfall chart of changes in US energy-related carbon dioxide emissions by sector from 2007 to 2024"></div></div>
+    <p class="map-note">Units: million tonnes of CO₂ (Mt). Totals sum the five rounded sector values used in Figure 5. Electricity-generation emissions belong to electric power and are not counted again in other sectors. Source: <a href="https://www.eia.gov/totalenergy/data/monthly/previous.php">EIA Monthly Energy Review, May 2026, Tables 11.2–11.6</a>. <a href="./us_sector_co2_waterfall_2007_2024.csv" download>Download waterfall CSV</a>.</p>
+    <div class="figure-caption"><h3 class="figure-label">Figure 9</h3><p class="figure-description">U.S. energy-related CO₂ emissions fell from approximately 6,015 million tonnes in 2007 to 4,788 million tonnes in 2024, a reduction of 1,227 million tonnes, or 20.4%. Electric power contributed the largest reduction, at 995 million tonnes, equivalent to about 81% of the net decrease. Transportation, industry and residential emissions also declined, while commercial emissions increased slightly. Unlike the percentage shares in Figure 5, this waterfall shows changes in absolute emissions, identifying the sectors behind the national decline.</p></div>
+  </section>
+  <section class="map-section" aria-labelledby="power-fuel-heading">
+    <h2 id="power-fuel-heading" class="section-heading">U.S. Electric Power CO₂ Emissions by Fuel (1973–2024)</h2>
+    <p class="figure-description">The stacked areas show emissions from each fuel, and their combined height shows the electric power sector total. The dashed line marks 2007, the comparison year used in Figures 5 and 9.</p>
+    <div id="us-power-fuel-area" aria-label="Stacked area chart of annual US electric power carbon dioxide emissions by fuel from 1973 to 2024"></div>
+    <p class="map-note">Other reported sources are the sector total minus coal, natural gas and petroleum, including reported geothermal and non-biomass waste emissions. This chart measures CO₂ emissions, rather than electricity generated. Source: <a href="https://www.eia.gov/totalenergy/data/monthly/previous.php">EIA Monthly Energy Review, May 2026, Table 11.6</a> (<a href="https://www.eia.gov/totalenergy/data/monthly/Zip_Excel_Month_end/MER_2026_05.zip">official Excel archive</a>). <a href="./us_power_co2_by_fuel_1973_2024.csv" download>Download fuel history CSV</a>.</p>
+    <div class="figure-caption"><h3 class="figure-label">Figure 10</h3><p class="figure-description">The decline in U.S. electric power emissions after 2007 was dominated by falling coal-related emissions. Coal emissions decreased from approximately 1,986 million tonnes in 2007 to 672 million tonnes in 2024, a fall of about 66%. Over the same period, natural-gas emissions increased from 371 to 735 million tonnes, partially offsetting that reduction. Total electric power emissions nevertheless fell by about 41%. Together with Figure 8, this chart links the geography of power infrastructure to changes in emissions over time, although emissions data alone cannot determine how much of the decline came from renewables, fuel switching, efficiency or changing electricity demand.</p></div>
+  </section>
+  <section class="map-section" aria-labelledby="scatter-heading">
+    <h2 id="scatter-heading" class="section-heading">Large Totals, High Emissions per Person? (2024)</h2>
+    <p class="figure-description">Each dot represents a country or territory. Compare total emissions horizontally and emissions per person vertically. The horizontal axis is logarithmic: equal spacing represents a tenfold increase. Type a country name below the chart to highlight it.</p>
+    <div id="co2-total-per-capita-scatter" aria-label="Scatter plot comparing total and per capita carbon dioxide emissions in 207 countries and territories in 2024"></div>
+    <p class="map-note">All 207 records with positive total and per-capita values are included. A logarithmic axis cannot include zero. Dot size is constant and does not encode population. Source: <a href="https://www.worldometers.info/co2-emissions/co2-emissions-by-country/">Worldometer, CO₂ emissions by country (2024)</a>. <a href="./co2_emissions_by_country_2024_no_extra_column.csv" download>Download country CSV</a>.</p>
+    <div class="figure-caption"><h3 class="figure-label">Figure 11</h3><p class="figure-description">A large national emissions total does not necessarily mean the highest emissions per person. China had the largest total in 2024, at approximately 13,125 million tonnes, but its per-capita figure of 9.13 tonnes was below the United States at 13.59 tonnes. India was another major emitter by total, while recording only 2.19 tonnes per person. Conversely, Palau and Qatar had much smaller totals but high per-capita emissions of 63.73 and 45.33 tonnes respectively. This comparison returns to the dashboard’s central question: national totals and per-capita emissions reveal different aspects of the global carbon-emissions picture.</p></div>
+  </section>
+
   <script>
     // Specifications stay in separate JSON files; page layout sets their size.
     async function embedChart(selector, specificationUrl) {
@@ -354,6 +382,9 @@
       }
     }
     initializeSectorWaffle();
+    embedChart("#us-sector-waterfall", "./us-sector-waterfall.vl.json");
+    embedChart("#us-power-fuel-area", "./us-power-fuel-area.vl.json");
+    embedChart("#co2-total-per-capita-scatter", "./co2-total-per-capita-scatter.vl.json");
     embedChart("#us-power-plants-map", "./us-power-plants-dot-map.vl.json");
     embedChart("#co2-connected-dot", "./co2-connected-dot.vl.json");
     embedChart("#fossil-fuel-symbol-map", "./fossil-fuel-symbol-map.vl.json");
