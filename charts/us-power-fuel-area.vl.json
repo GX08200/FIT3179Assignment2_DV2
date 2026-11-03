@@ -6,7 +6,7 @@
   "padding": 15,
   "description": "US electric power sector direct CO2 emissions by fuel, annual 1973–2024. EIA Monthly Energy Review May 2026 Table 11.6. Petroleum uses the petroleum total column once, not its constituent fuel columns again. Other reported sources is the rounded residual of published total minus coal, natural gas and petroleum, including reported geothermal and non-biomass waste. This is an emissions fuel mix, not the electricity generation mix.",
   "data": {
-    "url": "./us_power_co2_by_fuel_1973_2024.csv",
+    "url": "./data/us_power_co2_by_fuel_1973_2024.csv",
     "format": {
       "type": "csv",
       "parse": {
