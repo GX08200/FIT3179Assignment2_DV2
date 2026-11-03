@@ -1,0 +1,207 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 1100,
+  "height": 470,
+  "background": "#faf8f1",
+  "padding": 15,
+  "description": "Waterfall decomposing the change in US energy-related CO2 emissions from 2007 to 2024. Endpoints sum the same rounded direct sector values used in Figure 5; electricity emissions are counted once in Electric power. All values million tonnes CO2. Intermediate bars are changes, not sector total emissions.",
+  "data": {
+    "url": "./us_sector_co2_waterfall_2007_2024.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "order": "number",
+        "start_mt": "number",
+        "end_mt": "number",
+        "value_mt": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "min(datum.start_mt,datum.end_mt)",
+      "as": "bottom"
+    },
+    {
+      "calculate": "max(datum.start_mt,datum.end_mt)",
+      "as": "top"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "step",
+      "type": "ordinal",
+      "sort": [
+        "2007 total",
+        "Electric power",
+        "Transportation",
+        "Industrial",
+        "Residential",
+        "Commercial",
+        "2024 total"
+      ],
+      "title": null,
+      "axis": {
+        "labelAngle": -15,
+        "labelLimit": 160,
+        "labelFontSize": 13
+      }
+    },
+    "tooltip": [
+      {
+        "field": "step",
+        "title": "Sector / year"
+      },
+      {
+        "field": "kind",
+        "title": "Type"
+      },
+      {
+        "field": "value_mt",
+        "type": "quantitative",
+        "title": "Total or change (Mt)",
+        "format": ",.0f"
+      },
+      {
+        "field": "start_mt",
+        "type": "quantitative",
+        "title": "Starting level (Mt)",
+        "format": ",.0f"
+      },
+      {
+        "field": "end_mt",
+        "type": "quantitative",
+        "title": "Ending level (Mt)",
+        "format": ",.0f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "filter": "datum.next_step !== ''"
+        }
+      ],
+      "mark": {
+        "type": "rule",
+        "color": "#999",
+        "strokeDash": [
+          4,
+          3
+        ],
+        "strokeWidth": 1
+      },
+      "encoding": {
+        "x2": {
+          "field": "next_step"
+        },
+        "y": {
+          "field": "end_mt",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              6500
+            ],
+            "nice": false
+          },
+          "title": "CO₂ emissions (million tonnes)",
+          "axis": {
+            "values": [
+              0,
+              1000,
+              2000,
+              3000,
+              4000,
+              5000,
+              6000
+            ]
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "size": 72
+      },
+      "encoding": {
+        "y": {
+          "field": "bottom",
+          "type": "quantitative",
+          "scale": {
+            "domain": [
+              0,
+              6500
+            ],
+            "nice": false
+          },
+          "title": "CO₂ emissions (million tonnes)"
+        },
+        "y2": {
+          "field": "top"
+        },
+        "color": {
+          "field": "kind",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Total",
+              "Decrease",
+              "Increase"
+            ],
+            "range": [
+              "#52616b",
+              "#2166ac",
+              "#D55E00"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "direction": "horizontal"
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dy": -10,
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "color": "#222"
+      },
+      "encoding": {
+        "y": {
+          "field": "top",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "axis": {
+      "labelColor": "#222",
+      "titleColor": "#222",
+      "labelFontSize": 12,
+      "titleFontSize": 14,
+      "titlePadding": 15,
+      "gridColor": "#deded8"
+    },
+    "legend": {
+      "labelFontSize": 13,
+      "titleFontSize": 14,
+      "labelColor": "#222",
+      "titleColor": "#222"
+    }
+  }
+}
